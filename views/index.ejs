@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BNDE - Analyse de Documents</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <div class="brand">
+                        <h1>BNDE</h1>
+                        <p>Banque Nationale pour le Développement Économique</p>
+                    </div>
+                </div>
+                <div class="header-info">
+                    <span class="badge">POC - Analyse de Documents</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <h2>Système d'Analyse Intelligente de Documents</h2>
+                <p>Analysez vos documents officiels rapidement et en toute sécurité avec notre technologie IDP</p>
+            </section>
+
+            <!-- Token Input Section -->
+            <section class="token-section card">
+                <h3><i class="fas fa-key"></i> Configuration d'Accès</h3>
+                <div class="form-group">
+                    <label for="idpToken">Token d'accès IDP</label>
+                    <input type="text" id="idpToken" class="form-control" 
+                           placeholder="Entrez votre token d'accès IDP" 
+                           value="">
+                    <small class="form-text">Le token est requis pour accéder au service d'analyse</small>
+                </div>
+            </section>
+
+            <!-- Upload Section -->
+            <section class="upload-section card">
+                <h3><i class="fas fa-upload"></i> Télécharger un Document</h3>
+                
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg,.tiff" hidden>
+                    <div class="upload-content">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h4>Glissez et déposez votre document ici</h4>
+                        <p>ou</p>
+                        <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                            Parcourir les fichiers
+                        </button>
+                        <p class="file-info">Formats acceptés: PDF, PNG, JPG, TIFF • Max: 10 MB • Max pages: 50</p>
+                    </div>
+                </div>
+
+                <div id="filePreview" class="file-preview" style="display: none;">
+                    <div class="file-item">
+                        <i class="fas fa-file"></i>
+                        <div class="file-details">
+                            <span class="file-name"></span>
+                            <span class="file-size"></span>
+                        </div>
+                        <button class="btn-remove" onclick="removeFile()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button id="uploadBtn" class="btn btn-success btn-block" style="display: none;" onclick="uploadDocument()">
+                    <i class="fas fa-paper-plane"></i> Analyser le Document
+                </button>
+            </section>
+
+            <!-- Results Section -->
+            <section id="resultsSection" class="results-section" style="display: none;">
+                <div class="card">
+                    <h3><i class="fas fa-chart-line"></i> Résultats de l'Analyse</h3>
+                    <div id="resultsContent"></div>
+                </div>
+            </section>
+
+            <!-- History Section -->
+            <section class="history-section card">
+                <h3><i class="fas fa-history"></i> Historique des Analyses</h3>
+                <div id="historyContent">
+                    <p class="empty-state">Aucune analyse effectuée pour le moment</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 BNDE - Banque Nationale pour le Développement Économique du Sénégal</p>
+            <p>POC - Intelligence Document Processing</p>
+        </div>
+    </footer>
+
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="spinner"></div>
+            <h3>Analyse en cours...</h3>
+            <p id="loadingMessage">Veuillez patienter pendant que nous analysons votre document</p>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
