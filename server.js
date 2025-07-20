@@ -27,6 +27,63 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+// Route pour générer un token IDP
+app.post('/api/generate-token', async (req, res) => {
+    try {
+        const { client_id, client_secret } = req.body;
+
+        if (!client_id || !client_secret) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'Client ID et Client Secret sont requis' 
+            });
+        }
+
+        // Appel à l'API MuleSoft pour générer le token
+        const response = await axios.post(
+            'https://eu1.anypoint.mulesoft.com/accounts/api/v2/oauth2/token',
+            {
+                grant_type: 'client_credentials',
+                client_id: client_id,
+                client_secret: client_secret
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        res.json({
+            success: true,
+            data: response.data
+        });
+
+    } catch (error) {
+        console.error('Erreur génération token:', error);
+        
+        // Gestion des erreurs spécifiques
+        if (error.response) {
+            if (error.response.status === 401) {
+                res.status(401).json({ 
+                    success: false, 
+                    message: 'Identifiants invalides. Vérifiez votre Client ID et Client Secret.' 
+                });
+            } else {
+                res.status(error.response.status).json({ 
+                    success: false, 
+                    message: error.response.data?.error_description || 'Erreur lors de la génération du token' 
+                });
+            }
+        } else {
+            res.status(500).json({ 
+                success: false, 
+                message: 'Erreur de connexion au service de génération de token' 
+            });
+        }
+    }
+});
+
 // Route pour uploader un document
 app.post('/api/upload', async (req, res) => {
     try {

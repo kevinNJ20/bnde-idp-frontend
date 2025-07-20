@@ -199,6 +199,28 @@ body {
     color: var(--gray-600);
 }
 
+/* Token Input Group */
+.token-input-group {
+    display: flex;
+    gap: 1rem;
+    align-items: stretch;
+}
+
+.token-input-group .form-control {
+    flex: 1;
+}
+
+.btn-secondary {
+    background: var(--gray-600);
+    color: var(--white);
+}
+
+.btn-secondary:hover {
+    background: var(--gray-700);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
 /* Upload Area */
 .upload-area {
     border: 3px dashed var(--gray-300);
@@ -331,6 +353,20 @@ body {
     color: #c82333;
 }
 
+.btn-close {
+    background: none;
+    border: none;
+    color: var(--gray-600);
+    cursor: pointer;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    transition: var(--transition);
+}
+
+.btn-close:hover {
+    color: var(--gray-800);
+}
+
 /* Results */
 .result-item {
     display: flex;
@@ -454,6 +490,95 @@ body {
     width: 90%;
 }
 
+/* Token Generator Modal */
+.token-generator-content {
+    text-align: left;
+    max-width: 500px;
+    padding: 0;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.modal-header h3 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--dark-color);
+}
+
+.modal-header h3 i {
+    color: var(--primary-color);
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-description {
+    color: var(--gray-600);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+}
+
+/* Password Toggle */
+.form-group {
+    position: relative;
+}
+
+.btn-toggle-password {
+    position: absolute;
+    right: 1rem;
+    top: 2.5rem;
+    background: none;
+    border: none;
+    color: var(--gray-600);
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: var(--transition);
+}
+
+.btn-toggle-password:hover {
+    color: var(--primary-color);
+}
+
+/* Error and Success Messages */
+.error-message {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    border: 1px solid #f5c6cb;
+    text-align: center;
+}
+
+.success-message {
+    background: #d4edda;
+    color: #155724;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    border: 1px solid #c3e6cb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
 .spinner {
     width: 60px;
     height: 60px;
@@ -519,5 +644,13 @@ body {
     
     .modal-content {
         padding: 2rem;
+    }
+    
+    .token-input-group {
+        flex-direction: column;
+    }
+    
+    .token-input-group .btn {
+        width: 100%;
     }
 }

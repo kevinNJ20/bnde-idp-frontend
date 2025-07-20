@@ -45,9 +45,14 @@
                 <h3><i class="fas fa-key"></i> Configuration d'Accès</h3>
                 <div class="form-group">
                     <label for="idpToken">Token d'accès IDP</label>
-                    <input type="text" id="idpToken" class="form-control" 
-                           placeholder="Entrez votre token d'accès IDP" 
-                           value="">
+                    <div class="token-input-group">
+                        <input type="text" id="idpToken" class="form-control" 
+                               placeholder="Entrez votre token d'accès IDP" 
+                               value="">
+                        <button class="btn btn-secondary" onclick="showTokenGeneratorModal()">
+                            <i class="fas fa-magic"></i> Générer un token
+                        </button>
+                    </div>
                     <small class="form-text">Le token est requis pour accéder au service d'analyse</small>
                 </div>
             </section>
@@ -121,6 +126,51 @@
             <p id="loadingMessage">Veuillez patienter pendant que nous analysons votre document</p>
             <div class="progress-bar">
                 <div class="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Token Generator Modal -->
+    <div id="tokenGeneratorModal" class="modal" style="display: none;">
+        <div class="modal-content token-generator-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-key"></i> Générer un Token d'Accès</h3>
+                <button class="btn-close" onclick="hideTokenGeneratorModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description">
+                    Entrez vos identifiants pour générer automatiquement un token d'accès IDP.
+                </p>
+                <form id="tokenGeneratorForm" onsubmit="generateToken(event)">
+                    <div class="form-group">
+                        <label for="clientId">Client ID</label>
+                        <input type="text" id="clientId" class="form-control" 
+                               placeholder="Entrez votre Client ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientSecret">Client Secret</label>
+                        <input type="password" id="clientSecret" class="form-control" 
+                               placeholder="Entrez votre Client Secret" required>
+                        <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility()">
+                            <i class="fas fa-eye" id="togglePasswordIcon"></i>
+                        </button>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="hideTokenGeneratorModal()">
+                            Annuler
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="generateTokenBtn">
+                            <i class="fas fa-magic"></i> Générer le Token
+                        </button>
+                    </div>
+                </form>
+                <div id="tokenGeneratorError" class="error-message" style="display: none;"></div>
+                <div id="tokenGeneratorSuccess" class="success-message" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Token généré avec succès et ajouté au champ !</span>
+                </div>
             </div>
         </div>
     </div>

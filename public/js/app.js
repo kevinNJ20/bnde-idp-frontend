@@ -20,6 +20,10 @@ const historyContent = document.getElementById('historyContent');
 const loadingModal = document.getElementById('loadingModal');
 const loadingMessage = document.getElementById('loadingMessage');
 const idpTokenInput = document.getElementById('idpToken');
+const tokenGeneratorModal = document.getElementById('tokenGeneratorModal');
+const tokenGeneratorForm = document.getElementById('tokenGeneratorForm');
+const clientIdInput = document.getElementById('clientId');
+const clientSecretInput = document.getElementById('clientSecret');
 
 // Initialisation
 document.addEventListener('DOMContentLoaded', () => {
@@ -47,6 +51,92 @@ function initializeEventListeners() {
     idpTokenInput.addEventListener('change', (e) => {
         localStorage.setItem('bnde_idp_token', e.target.value);
     });
+}
+
+// Fonctions de génération de token
+function showTokenGeneratorModal() {
+    tokenGeneratorModal.style.display = 'flex';
+    clientIdInput.focus();
+}
+
+function hideTokenGeneratorModal() {
+    tokenGeneratorModal.style.display = 'none';
+    tokenGeneratorForm.reset();
+    document.getElementById('tokenGeneratorError').style.display = 'none';
+    document.getElementById('tokenGeneratorSuccess').style.display = 'none';
+}
+
+function togglePasswordVisibility() {
+    const passwordInput = document.getElementById('clientSecret');
+    const toggleIcon = document.getElementById('togglePasswordIcon');
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+    }
+}
+
+async function generateToken(event) {
+    event.preventDefault();
+    
+    const clientId = clientIdInput.value.trim();
+    const clientSecret = clientSecretInput.value.trim();
+    const generateBtn = document.getElementById('generateTokenBtn');
+    const errorDiv = document.getElementById('tokenGeneratorError');
+    const successDiv = document.getElementById('tokenGeneratorSuccess');
+    
+    // Réinitialiser les messages
+    errorDiv.style.display = 'none';
+    successDiv.style.display = 'none';
+    
+    // Désactiver le bouton et afficher un indicateur de chargement
+    generateBtn.disabled = true;
+    generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Génération en cours...';
+    
+    try {
+        const response = await fetch('/api/generate-token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                client_id: clientId,
+                client_secret: clientSecret
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || 'Erreur lors de la génération du token');
+        }
+        
+        // Succès - mettre à jour le champ token
+        const token = data.data.access_token;
+        idpTokenInput.value = token;
+        localStorage.setItem('bnde_idp_token', token);
+        
+        // Afficher le message de succès
+        successDiv.style.display = 'flex';
+        
+        // Fermer le modal après 2 secondes
+        setTimeout(() => {
+            hideTokenGeneratorModal();
+        }, 2000);
+        
+    } catch (error) {
+        errorDiv.textContent = error.message;
+        errorDiv.style.display = 'block';
+    } finally {
+        // Réactiver le bouton
+        generateBtn.disabled = false;
+        generateBtn.innerHTML = '<i class="fas fa-magic"></i> Générer le Token';
+    }
 }
 
 // Gestion des fichiers
