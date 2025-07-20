@@ -6,6 +6,21 @@ Interface web moderne pour la **Banque Nationale pour le Développement Économi
 
 Ce projet fonctionne en tandem avec le backend MuleSoft disponible ici : [https://github.com/kevinNJ20/idp_poc](https://github.com/kevinNJ20/idp_poc)
 
+## 📸 Aperçu de l'Interface
+
+![Interface BNDE IDP](./screenshots/bnde-idp-interface.png)
+
+*Interface complète montrant : la configuration d'accès avec génération de token, l'upload de documents, les résultats d'analyse en temps réel et l'historique des traitements*
+
+### Interface en Action
+
+L'interface présente quatre sections principales :
+
+1. **🔑 Configuration d'Accès** : Saisie ou génération automatique du token IDP
+2. **📄 Télécharger un Document** : Zone de drag-and-drop pour l'upload de fichiers
+3. **📊 Résultats de l'Analyse** : Affichage en temps réel des données extraites (passeport)
+4. **📚 Historique des Analyses** : Liste des 10 dernières analyses avec statuts
+
 ## 🚀 Fonctionnalités
 
 - **Upload de documents** : Glisser-déposer ou parcourir (PDF, PNG, JPG, TIFF)
@@ -63,7 +78,15 @@ cd bnde-idp-frontend
 npm install
 ```
 
-### 4. Configurer l'environnement
+### 4. Ajouter les captures d'écran (optionnel)
+
+```bash
+# Créer le dossier pour les captures d'écran
+mkdir screenshots
+# Placer l'image de l'interface dans ce dossier
+```
+
+### 5. Configurer l'environnement
 
 Modifiez le fichier `.env` selon vos besoins :
 
@@ -252,6 +275,8 @@ bnde-idp-frontend/
 ├── server.js            # Serveur Express principal
 ├── .env                 # Configuration d'environnement
 ├── README.md            # Documentation
+├── screenshots/         # Captures d'écran de l'interface
+│   └── bnde-idp-interface.png
 ├── views/
 │   └── index.ejs        # Template HTML principal
 └── public/
