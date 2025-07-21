@@ -2,7 +2,7 @@
 
 ## 🏦 Description
 
-Interface web moderne pour la **Banque Nationale pour le Développement Économique (BNDE)** du Sénégal. Cette application Node.js sert de frontend pour le système d'analyse intelligente de documents utilisant MuleSoft IDP.
+Interface web moderne pour la **Banque Nationale pour le Développement Économique (BNDE)** du Sénégal. Cette application Node.js sert de frontend pour le système d'analyse intelligente de documents utilisant MuleSoft IDP, spécialisée dans le traitement des **Cartes Nationales d'Identité (CNI)**.
 
 Ce projet fonctionne en tandem avec le backend MuleSoft disponible ici : [https://github.com/kevinNJ20/idp_poc](https://github.com/kevinNJ20/idp_poc)
 
@@ -18,7 +18,7 @@ L'interface présente quatre sections principales :
 
 1. **🔑 Configuration d'Accès** : Saisie ou génération automatique du token IDP
 2. **📄 Télécharger un Document** : Zone de drag-and-drop pour l'upload de fichiers
-3. **📊 Résultats de l'Analyse** : Affichage en temps réel des données extraites (passeport)
+3. **📊 Résultats de l'Analyse** : Affichage en temps réel des données extraites (CNI)
 4. **📚 Historique des Analyses** : Liste des 10 dernières analyses avec statuts
 
 ## 🚀 Fonctionnalités
@@ -26,7 +26,7 @@ L'interface présente quatre sections principales :
 - **Upload de documents** : Glisser-déposer ou parcourir (PDF, PNG, JPG, TIFF)
 - **Génération de token** : Interface intégrée pour générer automatiquement votre token IDP
 - **Analyse en temps réel** : Suivi du traitement avec indicateur de progression
-- **Résultats détaillés** : Extraction des informations des passeports
+- **Résultats détaillés** : Extraction des informations des CNI (NIN, nom, prénom, date de naissance, adresse, etc.)
 - **Historique** : Conservation des 10 dernières analyses
 - **Interface moderne** : Design professionnel et responsive
 - **Sécurité** : Token IDP configurable et sauvegardé localement
@@ -49,7 +49,7 @@ L'interface présente quatre sections principales :
        ↓                                              ↓
 ┌─────────────────┐                          ┌─────────────────┐
 │ MuleSoft OAuth  │                          │ Document Model  │
-│   (Token Gen)   │                          │   (Passport)    │
+│   (Token Gen)   │                          │     (CNI)       │
 └─────────────────┘                          └─────────────────┘
 ```
 
@@ -174,7 +174,11 @@ L'application sera accessible sur : **http://localhost:3000**
 Les résultats affichent :
 - Le statut de l'analyse (Terminée ou Validation manuelle requise)
 - Le nom du document
-- Les informations extraites (numéro de passeport, nom, prénom, date)
+- Les informations extraites de la CNI :
+  - **Identité** : Nom, prénom, NIN (Numéro d'Identification National), numéro de carte
+  - **Informations personnelles** : Date et lieu de naissance, sexe, taille
+  - **Adresse** : Adresse complète, pays
+  - **Informations administratives** : Dates de délivrance et d'expiration, lieu d'enregistrement, signature
 
 **Statuts possibles :**
 - **SUCCEEDED** : L'analyse est complète et les données ont été extraites avec succès

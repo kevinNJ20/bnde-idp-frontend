@@ -477,7 +477,7 @@ function showInfo(message) {
 
 // Affichage des résultats
 function displayResults(data) {
-    const isPassport = data.datas && data.datas.check_infos;
+    const isCNI = data.datas && data.datas.check_infos;
     const status = data.status || (data.datas && data.datas.status);
     
     let html = '<div class="results-container">';
@@ -530,44 +530,146 @@ function displayResults(data) {
         `;
     }
     
-    // Détails du passeport (seulement si le statut est SUCCEEDED)
-    if (isPassport && status !== 'MANUAL_VALIDATION_REQUIRED') {
+    // Détails de la CNI (seulement si le statut est SUCCEEDED)
+    if (isCNI && status !== 'MANUAL_VALIDATION_REQUIRED') {
         const info = data.datas.check_infos;
         
-        html += '<h4 style="margin: 1.5rem 0 1rem 0; color: var(--primary-color);">Informations extraites</h4>';
+        html += '<h4 style="margin: 1.5rem 0 1rem 0; color: var(--primary-color);">Informations extraites de la CNI</h4>';
         
-        if (info.numero_passeport) {
-            html += `
-                <div class="result-item">
-                    <span class="result-label">Numéro de passeport</span>
-                    <span class="result-value">${info.numero_passeport}</span>
-                </div>
-            `;
-        }
+        // Informations personnelles
+        html += '<h5 style="margin: 1rem 0 0.5rem 0; color: var(--gray-700); font-size: 1.1rem;">Identité</h5>';
         
-        if (info.nom) {
+        if (info.Last_name) {
             html += `
                 <div class="result-item">
                     <span class="result-label">Nom</span>
-                    <span class="result-value">${info.nom}</span>
+                    <span class="result-value">${info.Last_name}</span>
                 </div>
             `;
         }
         
-        if (info.prenom) {
+        if (info.first_name) {
             html += `
                 <div class="result-item">
                     <span class="result-label">Prénom</span>
-                    <span class="result-value">${info.prenom}</span>
+                    <span class="result-value">${info.first_name}</span>
                 </div>
             `;
         }
         
-        if (info.date) {
+        if (info.NIN) {
             html += `
                 <div class="result-item">
-                    <span class="result-label">Date</span>
-                    <span class="result-value">${formatDate(info.date)}</span>
+                    <span class="result-label">Numéro d'Identification National (NIN)</span>
+                    <span class="result-value">${info.NIN}</span>
+                </div>
+            `;
+        }
+        
+        if (info.id_card) {
+            html += `
+                <div class="result-item">
+                    <span class="result-label">Numéro de la carte</span>
+                    <span class="result-value">${info.id_card}</span>
+                </div>
+            `;
+        }
+        
+        // Informations personnelles supplémentaires
+        html += '<h5 style="margin: 1rem 0 0.5rem 0; color: var(--gray-700); font-size: 1.1rem;">Informations personnelles</h5>';
+        
+        if (info.birthDate) {
+            html += `
+                <div class="result-item">
+                    <span class="result-label">Date de naissance</span>
+                    <span class="result-value">${formatDate(info.birthDate)}</span>
+                </div>
+            `;
+        }
+        
+        if (info.PlaceofBirth) {
+            html += `
+                <div class="result-item">
+                    <span class="result-label">Lieu de naissance</span>
+                    <span class="result-value">${info.PlaceofBirth}</span>
+                </div>
+            `;
+        }
+        
+        if (info.sex) {
+            html += `
+                <div class="result-item">
+                    <span class="result-label">Sexe</span>
+                    <span class="result-value">${info.sex}</span>
+                </div>
+            `;
+        }
+        
+        if (info.Height) {
+            html += `
+                <div class="result-item">
+                    <span class="result-label">Taille</span>
+                    <span class="result-value">${info.Height}</span>
+                </div>
+            `;
+        }
+        
+        // Adresse et localisation
+        html += '<h5 style="margin: 1rem 0 0.5rem 0; color: var(--gray-700); font-size: 1.1rem;">Adresse</h5>';
+        
+        if (info.address) {
+            html += `
+                <div class="result-item">
+                    <span class="result-label">Adresse</span>
+                    <span class="result-value">${info.address}</span>
+                </div>
+            `;
+        }
+        
+        if (info.Country) {
+            html += `
+                <div class="result-item">
+                    <span class="result-label">Pays</span>
+                    <span class="result-value">${info.Country}</span>
+                </div>
+            `;
+        }
+        
+        // Informations administratives
+        html += '<h5 style="margin: 1rem 0 0.5rem 0; color: var(--gray-700); font-size: 1.1rem;">Informations administratives</h5>';
+        
+        if (info.delivry_date) {
+            html += `
+                <div class="result-item">
+                    <span class="result-label">Date de délivrance</span>
+                    <span class="result-value">${formatDate(info.delivry_date)}</span>
+                </div>
+            `;
+        }
+        
+        if (info.expiration_date) {
+            html += `
+                <div class="result-item">
+                    <span class="result-label">Date d'expiration</span>
+                    <span class="result-value">${formatDate(info.expiration_date)}</span>
+                </div>
+            `;
+        }
+        
+        if (info.place_of_record) {
+            html += `
+                <div class="result-item">
+                    <span class="result-label">Lieu d'enregistrement</span>
+                    <span class="result-value">${info.place_of_record}</span>
+                </div>
+            `;
+        }
+        
+        if (info.signature) {
+            html += `
+                <div class="result-item">
+                    <span class="result-label">Signature</span>
+                    <span class="result-value">${info.signature === 'SIGNATURE_DETECTED' ? 'Détectée' : info.signature}</span>
                 </div>
             `;
         }
@@ -707,7 +809,13 @@ function formatFileSize(bytes) {
 }
 
 function formatDate(dateString) {
+    if (!dateString || dateString === 'null' || dateString === 'undefined') {
+        return 'Non disponible';
+    }
     const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+        return dateString; // Retourner la chaîne originale si ce n'est pas une date valide
+    }
     return date.toLocaleDateString('fr-FR', {
         day: '2-digit',
         month: '2-digit',
